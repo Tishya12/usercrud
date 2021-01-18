@@ -8,43 +8,31 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-import static com.paytm.usercrud.model.User.*;
-
 @Component
 public class UserService {
 
+    @Autowired
+    private UserDao userDao;
 
-        @Autowired
-        private UserDao repo;
+    public User addUser(User user) {
+        return userDao.save(user);
+    }
 
+    public List<User> getUsers() {
+        return userDao.findAll();
+    }
 
+    public User getUser(int userId) {
+        Optional<User> optionalUser = userDao.findById(userId);
+        return optionalUser.orElse(null);
+    }
 
-        public User addUser(User user) {
-            return repo.save(user);
-        }
+    public User updateUser(int userId, User user) {
+        user.setUserId(userId);
+        return userDao.save(user);
+    }
 
-        public List<User> getUsers() {
-            return (List<User>) repo.findAll();
-        }
-
-        public User getUser(int userId) {
-
-//            Optional<User> optionalUser;
-//            optionalUser = repo.findById(userId);
-//
-//            if(!optionalUser.isPresent())     //adding exception
-//                throw new CustomerNotFoundException("Customer Record is not available...");
-
-            return repo.findById(userId).get();
-        }
-
-        public User updateUser(int userId, User user) {
-//            system.out.println(Use)
-            user.setUserId(userId);
-            return repo.save(user);
-        }
-
-        public void deleteUser(int userId) {
-            repo.deleteById(userId);
-        }
+    public void deleteUser(int userId) {
+        userDao.deleteById(userId);
+    }
 }

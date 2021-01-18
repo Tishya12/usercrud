@@ -9,7 +9,8 @@ import javax.persistence.Table;
 
 @Entity
 
-    @Table(name="User")
+@Table(name = "User")
+
 public class User {
     @Id                              //primary key
     @GeneratedValue(strategy = GenerationType.AUTO)                  //Auto generated value
@@ -25,6 +26,7 @@ public class User {
     public User() {
         super();
     }
+
     public User(int userId, String userName, String firstName, String lastName, String mobileNumber, String emailID, String address1, String address2) {
         super();
         this.userId = userId;
@@ -41,7 +43,7 @@ public class User {
         return userId;
     }
 
-    public  void setUserId(int userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

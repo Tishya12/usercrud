@@ -20,32 +20,31 @@ import java.util.List;
 @RequestMapping(value = "/user")
 public class UserController {
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @PostMapping
-    public User addCustomer(@RequestBody User user) {
-        return service.addUser(user);
+    public User addUser(@RequestBody User user) {
+        return userService.addUser(user);
     }
 
     @GetMapping
-    public List<User> getCustomers() {
-        return service.getUsers();
+    public List<User> getUsers() {
+        return userService.getUsers();
     }
 
     @GetMapping(value = "/{userId}")
-    public User getCustomer(@PathVariable("userId") int userId) {
-        return service.getUser(userId);
+    public User getUser(@PathVariable("userId") int userId) {
+        return userService.getUser(userId);
     }
 
     @PutMapping(value = "/{userId}")
-    public User updateCustomer(@PathVariable("userId") int userId, @RequestBody User user) {
-
-        return service.updateUser(userId, user);
+    public User updateUser(@PathVariable("userId") int userId, @RequestBody User user) {
+        return userService.updateUser(userId, user);
     }
 
     @DeleteMapping(value = "/{userId}")
-    public void deleteCustomer(@PathVariable("userId") int userId) {
-        service.deleteUser(userId);
+    public void deleteUser(@PathVariable("userId") int userId) {
+        userService.deleteUser(userId);
     }
 
 }
