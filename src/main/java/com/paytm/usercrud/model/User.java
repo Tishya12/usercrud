@@ -31,7 +31,7 @@ public class User {
         super();
         this.userId = userId;
         this.userName = userName;
-        this.firstName = firstName;
+                                     this.firstName = firstName;
         this.lastName = lastName;
         this.mobileNumber = mobileNumber;
         this.emailID = emailID;

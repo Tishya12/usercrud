@@ -10,4 +10,7 @@ import java.util.List;
 public interface UserDao extends JpaRepository<User, Integer> {
     @Override
     List<User> findAll();
+    public List<User> findByEmailID(String emailID);
+    public List<User> findByUserName(String userName);
+    public List<User> findByMobileNumber(String mobileNumber);
 }

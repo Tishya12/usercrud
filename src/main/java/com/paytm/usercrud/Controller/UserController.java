@@ -1,7 +1,6 @@
 package com.paytm.usercrud.Controller;
 
 
-import com.paytm.usercrud.Dao.UserDao;
 import com.paytm.usercrud.Service.UserService;
 import com.paytm.usercrud.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +22,19 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public User addUser(@RequestBody User user) {
-        return userService.addUser(user);
+    public String addUser(@RequestBody User user) {
+        List<User> user_email = userService.findByEmailID(user.getEmailID());
+        List<User> user_username = userService.findbyUserName(user.getUserName());
+        List<User> user_mobile_number = userService.findbyMobileNumber(user.getMobileNumber());
+
+        // checking for existing Users
+        if(!user_email.isEmpty())   {return "User with same emailID already exists";}
+        else if (!user_username.isEmpty() ) {return "User with same userName already exists";}
+        else if (!user_mobile_number.isEmpty()) {return "User with same mobileNumber already exists";}
+        else  {userService.addUser(user);}
+        return "User saved";
+
+//    return userService.addUser(user);
     }
 
     @GetMapping
@@ -38,13 +48,25 @@ public class UserController {
     }
 
     @PutMapping(value = "/{userId}")
-    public User updateUser(@PathVariable("userId") int userId, @RequestBody User user) {
-        return userService.updateUser(userId, user);
+    public String updateUser(@PathVariable("userId") int userId, @RequestBody User user) {
+//     return userService.updateUser(userId, user);
+        User existingUser = userService.updateUser(userId,user);
+        if(existingUser == null)
+            return "user not existed";
+        else return "user data updated";
     }
 
     @DeleteMapping(value = "/{userId}")
-    public void deleteUser(@PathVariable("userId") int userId) {
-        userService.deleteUser(userId);
+    public String deleteUser(@PathVariable("userId") int userId) {
+//        userService.deleteUser(userId);
+        if (userService.getUser(userId) != null) {
+            userService.deleteUser(userId);
+            return "User data deleted";
+        } else {
+            return "User doesn't exist";
+
+        }
+
     }
 
 }
